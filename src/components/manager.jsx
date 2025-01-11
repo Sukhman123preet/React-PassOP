@@ -7,7 +7,28 @@ function Manager() {
   const [form, SetForm] = useState({ website: "", username: "", password: "" });
   const [passwordArray, setPasswordArray] = useState([]);
 
-  useEffect(() => {
+  function validate_pass() {
+    const urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})([\/\w.-]*)*\/?$/i;
+    const usernameRegex = /^[a-zA-Z]+$/;
+    const isWebsiteValid = urlRegex.test(form.website);
+    const isUsernameValid = usernameRegex.test(form.username);
+    const isPasswordValid = form.password.length >= 6;
+  
+    if(!isWebsiteValid){
+      return "Please Enter Valid Url!";
+    }
+    else if(!isUsernameValid ){
+      return "Please only use letters (a-z or A-Z) in the username ";
+    }
+    else if(!isPasswordValid){
+      return "Passwoord of length less than 6 not allowed !" ;
+    }
+    else{
+      return "OK";
+    }
+  }
+
+  useEffect(() =>{
     const fetchPasswords = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/passwords");
@@ -21,13 +42,15 @@ function Manager() {
         console.error("Error fetching passwords:", error);
       }
     };
-
     fetchPasswords();
   }, []);
 
-
-  const savePassword = async (_id=-1) => {
+  const savePassword = async (_id='-1') => {
     try {
+      const msg=validate_pass();
+      if(msg!="OK"){
+        throw new Error(msg);
+      }
       setPasswordArray(passwordArray.filter(item => item._id !== _id));
       const response = await fetch("http://localhost:5000/api/save", {
         method: "POST",
@@ -36,20 +59,19 @@ function Manager() {
         },
         body: JSON.stringify(form),
       })
+      const data = await response.json();
       if (!response.ok) {
-        const message =
-          response.status === 400
-            ? "Bad Request: Please check your input."
-            : `HTTP error! Status: ${response.status}`;
-        throw new Error(message);
+        const message = response.status === 500 ? data.error:"Bad Request: Please check your API Request.";
+          throw new Error(message);
       }
       else{
-      const data = await response.json();
       toast.success("Password saved!");
       setPasswordArray((prev) => [...prev, { ...form, _id: data._id }]);
+      SetForm({ website: "", username: "", password: "" });
+
       }
     } catch (err) {
-      toast.error("Please Enter Valid Input.");
+      toast.error(err.message);
     }
   };
 
@@ -153,13 +175,13 @@ function Manager() {
                     <tr key={index} className="hover:bg-green-200">
                       <td className="py-2 border border-white">
                         <div className="flex items-center justify-center gap-2">
-                          <a href={item.site} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                          <a href={item.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline cursor-pointer">
                             {item.website}
                           </a>
                           <div
                             className="lordiconcopy size-7 cursor-pointer"
                             onClick={() => {
-                              showToast(item.site);
+                              showToast(item.website);
                             }}
                           >
                             <lord-icon

@@ -9,7 +9,3 @@ export default defineConfig({
 
 
 
-gh repo edit my-repo  react-passwordManager
-
-
-

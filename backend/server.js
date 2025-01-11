@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-const bcrypt = require("bcrypt");
-
 dotenv.config();
 const app = express();
 
@@ -25,10 +23,8 @@ const Password = require("./models/Password");
 app.post("/api/save", async (req, res) => {
     try {
         const { website, username, password } = req.body;
-        // const hashedPassword = await bcrypt.hash(password, 10);
         const newPassword = new Password({ website, username, password });
         await newPassword.save();
-        console.log(newPassword);
         res.status(201).json({_id:newPassword._id});
     } catch (err) {
         res.status(500).json({ error: "Failed to save password" });
@@ -51,7 +47,6 @@ app.delete("/api/delete/:id", async (req, res) => {
     }
 });
 
-
 // Get all passwords
 app.get("/api/passwords", async (req, res) => {
     try {
@@ -61,6 +56,7 @@ app.get("/api/passwords", async (req, res) => {
         res.status(500).json({ error: "Failed to retrieve passwords" });
     }
 });
+
 app.get("/", async (req, res) => {
     try {
         res.status(200).json("success");
