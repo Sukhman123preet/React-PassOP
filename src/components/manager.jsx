@@ -13,22 +13,22 @@ function Manager() {
     const isWebsiteValid = urlRegex.test(form.website);
     const isUsernameValid = usernameRegex.test(form.username);
     const isPasswordValid = form.password.length >= 6;
-  
-    if(!isWebsiteValid){
+
+    if (!isWebsiteValid) {
       return "Please Enter Valid Url!";
     }
-    else if(!isUsernameValid ){
+    else if (!isUsernameValid) {
       return "Please only use letters (a-z or A-Z) in the username ";
     }
-    else if(!isPasswordValid){
-      return "Passwoord of length less than 6 not allowed !" ;
+    else if (!isPasswordValid) {
+      return "Passwoord of length less than 6 not allowed !";
     }
-    else{
+    else {
       return "OK";
     }
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchPasswords = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/passwords");
@@ -45,10 +45,10 @@ function Manager() {
     fetchPasswords();
   }, []);
 
-  const savePassword = async (_id='-1') => {
+  const savePassword = async (_id = '-1') => {
     try {
-      const msg=validate_pass();
-      if(msg!="OK"){
+      const msg = validate_pass();
+      if (msg != "OK") {
         throw new Error(msg);
       }
       setPasswordArray(passwordArray.filter(item => item._id !== _id));
@@ -61,13 +61,13 @@ function Manager() {
       })
       const data = await response.json();
       if (!response.ok) {
-        const message = response.status === 500 ? data.error:"Bad Request: Please check your API Request.";
-          throw new Error(message);
+        const message = response.status === 500 ? data.error : "Bad Request: Please check your API Request.";
+        throw new Error(message);
       }
-      else{
-      toast.success("Password saved!");
-      setPasswordArray((prev) => [...prev, { ...form, _id: data._id }]);
-      SetForm({ website: "", username: "", password: "" });
+      else {
+        toast.success("Password saved!");
+        setPasswordArray((prev) => [...prev, { ...form, _id: data._id }]);
+        SetForm({ website: "", username: "", password: "" });
 
       }
     } catch (err) {
@@ -150,7 +150,7 @@ function Manager() {
               </span>
             </div>
           </div>
-          <button className='flex justify-center items-center gap-2 bg-green-400 hover:bg-green-300 rounded-full px-8 py-2 w-fit border border-green-900' onClick={()=>savePassword(form._id)}>
+          <button className='flex justify-center items-center gap-2 bg-green-400 hover:bg-green-300 rounded-full px-8 py-2 w-fit border border-green-900' onClick={() => savePassword(form._id)}>
             <lord-icon
               src="https://cdn.lordicon.com/jgnvfzqg.json"
               trigger="hover" >
@@ -254,3 +254,5 @@ function Manager() {
   )
 }
 export default Manager
+
+
