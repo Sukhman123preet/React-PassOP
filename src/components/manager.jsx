@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 
 function Manager() {
+ 
   const ref = useRef();
   const pass_ref = useRef()
   const [form, SetForm] = useState({ website: "", username: "", password: "" });
@@ -31,7 +32,7 @@ function Manager() {
   useEffect(() => {
     const fetchPasswords = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/passwords");
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URI}/api/passwords`);
         if (!response.ok) {
           throw new Error("Failed to fetch passwords");
         }
@@ -52,7 +53,7 @@ function Manager() {
         throw new Error(msg);
       }
       setPasswordArray(passwordArray.filter(item => item._id !== _id));
-      const response = await fetch("http://localhost:5000/api/save", {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URI}/api/save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +93,7 @@ function Manager() {
     if (c) {
       try {
         // Send DELETE request to the backend
-        const response = await fetch(`http://localhost:5000/api/delete/${_id}`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URI}/api/delete/${_id}`, {
           method: "DELETE",
         })
         if (response.ok) {
