@@ -59,7 +59,7 @@ function Manager() {
 
       const data = await response.json();
       if (!response.ok) {
-        const message = response.status === 500 ? data.error : "Bad Request: Please check your API Request.";
+        const message = response.status === 500 ? data.error : "Create an account or Log in first.";
         throw new Error(message);
       }
 
