@@ -1,4 +1,4 @@
-import Svg from './git_hub.jsx';
+
 import SignupModal from './SignupModal.jsx';
 import LoginModal from './LoginModal.jsx';
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const Navbar = () => {
     };
 
     verifyToken();
-  }, [localStorage]);
+  }, []);
 
   return (
     <>
@@ -89,25 +89,23 @@ const Navbar = () => {
               ) : (
                 <button
                   onClick={() => setShowSignup(true)}
-                  className="flex items-center justify-center gap-2 px-4 py-2 m-2 bg-gradient-to-r from-green-700 to-teal-500 text-white font-semibold rounded-full shadow-md hover:from-green-600 hover:to-teal-600 hover:shadow-lg hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
+                  className="flex items-center justify-center gap-2 px-2 py-1  bg-gradient-to-r from-green-700 to-teal-500 text-white font-semibold rounded-full shadow-md hover:from-green-600 hover:to-teal-600 hover:shadow-lg hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
                 >
                   <img
-                    width="24"
-                    height="24"
+                    width="20"
+                    height="20"
                     src="https://img.icons8.com/external-royyan-wijaya-detailed-outline-royyan-wijaya/24/external-user-interface-royyan-wijaya-detailed-outline-royyan-wijaya-2.png"
                     alt="signup"
                   />
 
-                  <div className="text-lg font-semibold px-2">SignUp</div>
+                  <div className="text-lg font-semibold ">SignUp</div>
 
                 </button>
               )}
-              <button
-                className="flex items-center justify-center gap-2 px-4 py-2 m-2 bg-gradient-to-r from-green-700 to-teal-500 text-white font-semibold rounded-full shadow-md hover:from-green-600 hover:to-teal-600 hover:shadow-lg hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
-              >
-                <Svg />
-                <div className="text-lg font-semibold px-2">GitHub</div>
-              </button>
+              
+                
+                
+              
             </div>
           </div>
         </div>

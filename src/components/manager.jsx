@@ -34,7 +34,7 @@ function Manager() {
         setPasswordArray(data);
       } catch (error) {
         console.error("Error fetching passwords:", error);
-        toast.error("Session expired or unauthorized.");
+        
       }
     };
     fetchPasswords();

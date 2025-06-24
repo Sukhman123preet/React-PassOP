@@ -13,7 +13,7 @@ const SignupModal = ({ onClose, onSwitchToLogin }) => {
     setError('');
 
     try {
-      const res = await fetch('${import.meta.env.VITE_SERVER_URI}/api/signup', {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URI}/api/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
