@@ -59,8 +59,8 @@ function Manager() {
 
       const data = await response.json();
       if (!response.ok) {
-        const message = response.status === 500 ? data.error : "Create an account or Log in first.";
-        throw new Error(message);
+        
+        throw new Error("Create an account or Log in first.");
       }
 
       toast.success("Password saved!");
